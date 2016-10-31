@@ -12,7 +12,7 @@ const constants = {
 };
 
 const createHeader = n => {
-	const buf = Buffer.alloc(constants.headerSize);
+	const buf = new Buffer(constants.headerSize);
 
 	buf.writeUInt16LE(0, 0);
 	buf.writeUInt16LE(1, 2);
@@ -22,7 +22,7 @@ const createHeader = n => {
 };
 
 const createDirectory = (data, offset) => {
-	const buf = Buffer.alloc(constants.directorySize);
+	const buf = new Buffer(constants.directorySize);
 	const size = data.data.length + constants.bitmapSize;
 	const width = data.width === 256 ? 0 : data.width;
 	const height = data.height === 256 ? 0 : data.height;
@@ -41,7 +41,7 @@ const createDirectory = (data, offset) => {
 };
 
 const createBitmap = (data, compression) => {
-	const buf = Buffer.alloc(constants.bitmapSize);
+	const buf = new Buffer(constants.bitmapSize);
 
 	buf.writeUInt32LE(constants.bitmapSize, 0);
 	buf.writeInt32LE(data.width, 4);
@@ -62,7 +62,7 @@ const createDib = (data, width, height, bpp) => {
 	const cols = width * bpp;
 	const rows = height * cols;
 	const end = rows - cols;
-	const buf = Buffer.alloc(data.length);
+	const buf = new Buffer(data.length);
 
 	for (let row = 0; row < rows; row += cols) {
 		for (let col = 0; col < cols; col += bpp) {
